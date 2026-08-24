@@ -104,3 +104,5 @@ input, select {
 
 .pager { display: flex; gap: 10px; align-items: center; margin-top: 10px; font-size: 14px; }
 .muted { color: #7d8ba1; }
+
+.badge-risk { background: #fbf6ea; color: #8a6d1a; }

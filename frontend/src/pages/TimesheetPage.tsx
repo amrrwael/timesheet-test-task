@@ -4,14 +4,11 @@ import { deleteEntry, getEmployees, getPeriods, getProjects, getTimeEntries } fr
 import type { MonthKey, TimeEntry } from "../api/types";
 import EntryModal from "../components/EntryModal";
 import ErrorBanner from "../components/ErrorBanner";
+import { money, ruDate } from "../utils/format";
+
 
 const PAGE_SIZE = 20;
 
-const money = (value: number) =>
-  value.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-const ruDate = (isoDate: string) =>
-  new Date(`${isoDate}T00:00:00`).toLocaleDateString("ru-RU");
 
 export default function TimesheetPage({ month }: { month: MonthKey }) {
   const [employeeId, setEmployeeId] = useState("");
