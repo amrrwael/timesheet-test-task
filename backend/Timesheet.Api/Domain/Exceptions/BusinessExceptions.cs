@@ -29,3 +29,10 @@ public sealed class ConflictException : BusinessException
     public ConflictException(string code, string message)
         : base(code, message, StatusCodes.Status409Conflict) { }
 }
+
+/// <summary>400 — нарушение бизнес-правила (нет ставки на дату, дата вне периода проекта).</summary>
+public sealed class BusinessRuleException : BusinessException
+{
+    public BusinessRuleException(string code, string message)
+        : base(code, message, StatusCodes.Status400BadRequest) { }
+}
