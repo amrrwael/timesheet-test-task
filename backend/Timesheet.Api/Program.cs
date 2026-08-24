@@ -32,6 +32,7 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>()
 builder.Services.AddScoped<ReferenceService>();
 builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<TimeEntryService>();
+builder.Services.AddScoped<PeriodService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTimeEntryRequestValidator>();
 
 var app = builder.Build();

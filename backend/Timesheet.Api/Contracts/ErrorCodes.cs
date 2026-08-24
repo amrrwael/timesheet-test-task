@@ -11,4 +11,6 @@ public static class ErrorCodes
     public const string ProjectDateRange = "PROJECT_DATE_RANGE";
     public const string VersionConflict = "VERSION_CONFLICT";
     public const string InvalidPeriod = "INVALID_PERIOD";
+    public const string PeriodAlreadyClosed = "PERIOD_ALREADY_CLOSED";
+    public const string PeriodNotClosed = "PERIOD_NOT_CLOSED";
 }
