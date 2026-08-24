@@ -1,6 +1,7 @@
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Timesheet.Api.Domain.Entities;
 using Timesheet.Api.Infrastructure;
+using Timesheet.Api.Domain.Exceptions;
 
 namespace Timesheet.Api.Services;
 
@@ -41,5 +42,23 @@ public class ReferenceService
         return await _db.GetCollection<Project>(MongoCollections.Projects)
             .Find(p => p.Id == id)
             .FirstOrDefaultAsync(ct);
+    }
+
+    /// <summary>Добавляет ставку с даты; если ставка с такой датой начала уже есть —
+    /// заменяет её (изменение ставки задним числом, сценарий приёмки №8).</summary>
+    public async Task<Employee> AddRateAsync(string employeeId, DateTime fromUtcMidnight, decimal value, CancellationToken ct)
+    {
+        var filter = Builders<Employee>.Filter.Eq(e => e.Id, employeeId);
+
+        var update = Builders<Employee>.Update
+            .PullFilter(e => e.Rates, r => r.From == fromUtcMidnight)
+            .Push(e => e.Rates, new Rate { From = fromUtcMidnight, Value = value });
+
+        var options = new FindOneAndUpdateOptions<Employee> { ReturnDocument = ReturnDocument.After };
+
+        var employee = await _db.GetCollection<Employee>(MongoCollections.Employees)
+            .FindOneAndUpdateAsync(filter, update, options, ct);
+
+        return employee ?? throw new NotFoundException($"Сотрудник {employeeId} не найден.");
     }
 }
