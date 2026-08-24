@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>Seeder</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.28.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- сущности и инициализатор индексов берём из API, чтобы не дублировать модель -->
+		<ProjectReference Include="..\..\backend\Timesheet.Api\Timesheet.Api.csproj" />
+	</ItemGroup>
+
+</Project>
