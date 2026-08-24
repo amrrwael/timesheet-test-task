@@ -72,3 +72,35 @@ input, select {
 .toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
 
 .totals { font-weight: 600; margin-top: 10px; }
+
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(22, 36, 58, 0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 95vw;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.modal h3 { margin: 0; }
+.modal label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 6px; }
+
+.notice {
+  background: #fbf6ea;
+  border: 1px solid #e3d5b3;
+  padding: 8px 12px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.pager { display: flex; gap: 10px; align-items: center; margin-top: 10px; font-size: 14px; }
+.muted { color: #7d8ba1; }
