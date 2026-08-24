@@ -33,6 +33,7 @@ builder.Services.AddScoped<ReferenceService>();
 builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<TimeEntryService>();
 builder.Services.AddScoped<PeriodService>();
+builder.Services.AddScoped<TimeEntryQueryService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTimeEntryRequestValidator>();
 
 var app = builder.Build();

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheet.Api", "Timesheet.Api\Timesheet.Api.csproj", "{BF20666B-7700-4BE1-8C84-115BFDE50EA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seeder", "..\tools\Seeder\Seeder.csproj", "{35A990FB-5059-46F1-92C6-90A9D0B4DCC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BF20666B-7700-4BE1-8C84-115BFDE50EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF20666B-7700-4BE1-8C84-115BFDE50EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF20666B-7700-4BE1-8C84-115BFDE50EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35A990FB-5059-46F1-92C6-90A9D0B4DCC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35A990FB-5059-46F1-92C6-90A9D0B4DCC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35A990FB-5059-46F1-92C6-90A9D0B4DCC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35A990FB-5059-46F1-92C6-90A9D0B4DCC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
