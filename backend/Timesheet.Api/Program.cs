@@ -7,6 +7,8 @@ using Timesheet.Api.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
 using System.ComponentModel.Design;
 using Timesheet.Api.Services;
+using FluentValidation;
+using Timesheet.Api.Services.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,8 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>()
     .GetDatabase(builder.Configuration["Mongo:DatabaseName"]));
 
 builder.Services.AddScoped<ReferenceService>();
+builder.Services.AddScoped<TimeEntryService>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateTimeEntryRequestValidator>();
 
 var app = builder.Build();
 
