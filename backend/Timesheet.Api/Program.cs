@@ -1,9 +1,16 @@
+﻿using System.Text.Json.Serialization;
 using MongoDB.Driver;
+using Timesheet.Api.Contracts;
+using Timesheet.Api.Domain.Exceptions;
+using Timesheet.Api.Middleware;
 using Timesheet.Api.Infrastructure;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(o =>
+    o.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -19,6 +26,8 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>()
     .GetDatabase(builder.Configuration["Mongo:DatabaseName"]));
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 await MongoIndexInitializer.EnsureIndexesAsync(
     app.Services.GetRequiredService<IMongoDatabase>());
@@ -40,5 +49,17 @@ app.MapGet("/health", async (IMongoDatabase db) =>
         return Results.Json(new { status = "error", detail = ex.Message }, statusCode: 503);
     }
 });
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapGet("/dev/throw-conflict", HandleThrowConflict);
+}
+
+static IResult HandleThrowConflict()
+{
+    throw new ConflictException(ErrorCodes.PeriodClosed,
+        "Тест: период закрыт для редактирования.");
+}
+
 
 app.Run();
