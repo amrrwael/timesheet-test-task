@@ -1,4 +1,5 @@
 using MongoDB.Driver;
+using Timesheet.Api.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>()
     .GetDatabase(builder.Configuration["Mongo:DatabaseName"]));
 
 var app = builder.Build();
+
+await MongoIndexInitializer.EnsureIndexesAsync(
+    app.Services.GetRequiredService<IMongoDatabase>());
 
 app.UseSwagger();
 app.UseSwaggerUI();
