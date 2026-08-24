@@ -30,6 +30,7 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>()
     .GetDatabase(builder.Configuration["Mongo:DatabaseName"]));
 
 builder.Services.AddScoped<ReferenceService>();
+builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<TimeEntryService>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTimeEntryRequestValidator>();
 
