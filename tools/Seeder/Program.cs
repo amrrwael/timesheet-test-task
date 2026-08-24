@@ -2,7 +2,10 @@
 using Timesheet.Api.Domain.Entities;
 using Timesheet.Api.Infrastructure;
 
-var connectionString = args.Length > 0 ? args[0] : "mongodb://localhost:27017";
+var connectionString =
+    Environment.GetEnvironmentVariable("SEED_CONNECTION_STRING")
+    ?? (args.Length > 0 ? args[0] : "mongodb://localhost:27017");
+
 const string databaseName = "timesheet";
 
 var client = new MongoClient(connectionString);

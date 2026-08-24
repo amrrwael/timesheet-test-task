@@ -64,8 +64,10 @@ public class ReportService
                 rows.Add(MapRow(doc.AsBsonDocument));
 
             var total = facet["total"].AsBsonArray.FirstOrDefault()?.AsBsonDocument;
-            if (total is not null && !total["_id"].IsBsonNull)
+            if (total is not null)
             {
+                // $group с константным _id всегда возвращает одну строку:
+                // при пустом месяце суммы просто равны нулю
                 totalHours = total["hours"].ToDouble();
                 totalAmount = total["amount"].ToDecimalSafe();
             }

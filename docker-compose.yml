@@ -6,6 +6,43 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Timesheet.Api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://+:5000
+      Mongo__ConnectionString: mongodb://mongo:27017
+      Mongo__DatabaseName: timesheet
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+
+  seeder:
+    build:
+      context: .
+      dockerfile: tools/Seeder/Dockerfile
+    environment:
+      SEED_CONNECTION_STRING: mongodb://mongo:27017
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    build: ./frontend
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
 
 volumes:
   mongo_data:
