@@ -29,13 +29,17 @@ public class ReferenceService
             .ToListAsync(ct);
     }
 
-    public Task<Employee?> GetEmployeeByIdAsync(string id, CancellationToken ct) =>
-    _db.GetCollection<Employee>(MongoCollections.Employees)
-        .Find(e => e.Id == id)
-        .FirstOrDefaultAsync(ct);
+    public async Task<Employee?> GetEmployeeByIdAsync(string id, CancellationToken ct)
+    {
+        return await _db.GetCollection<Employee>(MongoCollections.Employees)
+            .Find(e => e.Id == id)
+            .FirstOrDefaultAsync(ct);
+    }
 
-    public Task<Project?> GetProjectByIdAsync(string id, CancellationToken ct) =>
-        _db.GetCollection<Project>(MongoCollections.Projects)
+    public async Task<Project?> GetProjectByIdAsync(string id, CancellationToken ct)
+    {
+        return await _db.GetCollection<Project>(MongoCollections.Projects)
             .Find(p => p.Id == id)
             .FirstOrDefaultAsync(ct);
+    }
 }

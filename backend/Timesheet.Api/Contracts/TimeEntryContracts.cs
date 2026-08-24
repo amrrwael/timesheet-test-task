@@ -40,3 +40,19 @@ public record TimeEntryDto(
     string? Comment,
     int Version,
     bool Overtime);
+
+public record TimeEntriesFilter(
+    int Year,
+    int Month,
+    string? EmployeeId = null,
+    string? ProjectId = null,
+    int Page = 1,
+    int PageSize = 20);
+
+public record TimeEntriesPageDto(
+    IReadOnlyList<TimeEntryDto> Items,
+    int Page,
+    int PageSize,
+    long TotalCount,
+    double TotalHours,
+    decimal TotalAmount);
