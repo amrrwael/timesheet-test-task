@@ -5,6 +5,8 @@ using Timesheet.Api.Domain.Exceptions;
 using Timesheet.Api.Middleware;
 using Timesheet.Api.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics;
+using System.ComponentModel.Design;
+using Timesheet.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,8 @@ builder.Services.AddSingleton<IMongoClient>(_ =>
 
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>()
     .GetDatabase(builder.Configuration["Mongo:DatabaseName"]));
+
+builder.Services.AddScoped<ReferenceService>();
 
 var app = builder.Build();
 
@@ -49,17 +53,5 @@ app.MapGet("/health", async (IMongoDatabase db) =>
         return Results.Json(new { status = "error", detail = ex.Message }, statusCode: 503);
     }
 });
-
-if (app.Environment.IsDevelopment())
-{
-    app.MapGet("/dev/throw-conflict", HandleThrowConflict);
-}
-
-static IResult HandleThrowConflict()
-{
-    throw new ConflictException(ErrorCodes.PeriodClosed,
-        "Тест: период закрыт для редактирования.");
-}
-
 
 app.Run();
