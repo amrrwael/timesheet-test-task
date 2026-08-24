@@ -12,15 +12,29 @@ public class TimeEntriesController : ControllerBase
     private readonly TimeEntryService _service;
     private readonly IValidator<CreateTimeEntryRequest> _createValidator;
     private readonly IValidator<UpdateTimeEntryRequest> _updateValidator;
+    private readonly TimeEntryQueryService _queryService;
+    private readonly IValidator<TimeEntriesFilter> _filterValidator;
 
     public TimeEntriesController(
         TimeEntryService service,
         IValidator<CreateTimeEntryRequest> createValidator,
-        IValidator<UpdateTimeEntryRequest> updateValidator)
+        IValidator<UpdateTimeEntryRequest> updateValidator,
+        TimeEntryQueryService queryService,
+        IValidator<TimeEntriesFilter> filterValidator)
     {
         _service = service;
         _createValidator = createValidator;
         _updateValidator = updateValidator;
+        _queryService = queryService;
+        _filterValidator = filterValidator;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<TimeEntriesPageDto>> GetPage(
+        [FromQuery] TimeEntriesFilter filter, CancellationToken ct)
+    {
+        await _filterValidator.ValidateAndThrowAsync(filter, ct);
+        return Ok(await _queryService.GetPageAsync(filter, ct));
     }
 
     /// <summary>Создание записи. Метод PUT задан спецификацией.</summary>
